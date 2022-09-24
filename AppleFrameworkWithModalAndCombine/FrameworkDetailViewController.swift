@@ -5,11 +5,14 @@
 //
 
 import UIKit
+import Combine
 import SafariServices
 
 class FrameworkDetailViewController: UIViewController {
 
-    var selectedApp: AppleFramework = AppleFramework(name: "", imageName: "", urlString: "", description: "")
+    var buttonTapped = PassthroughSubject<AppleFramework, Never>()
+    var selectedApp = CurrentValueSubject<AppleFramework, Never>(AppleFramework(name: "", imageName: "", urlString: "", description: ""))
+    var subscriptions = Set<AnyCancellable>()
     
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,18 +21,34 @@ class FrameworkDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+        bind()
     }
     
-    func updateUI() {
-        appImageView.image = UIImage(named: selectedApp.imageName)
-        titleLabel.text = selectedApp.name
-        descriptionLabel.text = selectedApp.description
+    private func bind() {
+        // input -> 사용자 입력
+        buttonTapped
+            .receive(on: RunLoop.main)
+            .compactMap { URL(string: $0.urlString)}
+            .sink { [unowned self] url in
+                let safari = SFSafariViewController(url: url)
+                self.present(safari, animated: true)
+            }.store(in: &subscriptions)
+        
+        // output -> 데이터 변경으로 인한 UI업데이트
+        selectedApp
+            .receive(on: RunLoop.main)
+            .sink { [unowned self] selectedAppData in
+                self.updateUI(selectedAppData)
+            }.store(in: &subscriptions)
+    }
+    
+    private func updateUI(_ data: AppleFramework) {
+        appImageView.image = UIImage(named: data.imageName)
+        titleLabel.text = data.name
+        descriptionLabel.text = data.description
     }
     
     @IBAction func learnMoreButtonTapped(_ sender: UIButton) {
-        guard let url = URL(string: selectedApp.urlString) else { return}
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        buttonTapped.send(selectedApp.value)
     }
 }

@@ -37,7 +37,7 @@ class FrameworkViewController: UIViewController {
             .sink { [unowned self] framework in
             let storyboard = UIStoryboard(name: "Detail", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "FrameworkDetailViewController") as! FrameworkDetailViewController
-            vc.selectedApp = framework
+                vc.selectedApp.send(framework)
             self.present(vc, animated: true)
         }.store(in: &subscriptions)
         
