@@ -45,11 +45,20 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A3CF2B528BA3909000B91C2"
+            BuildableName = "AppleFrameworkWithModalAndCombine.app"
+            BlueprintName = "AppleFrameworkWithModalAndCombine"
+            ReferencedContainer = "container:AppleFrameworkWithModalAndCombine.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "6A3CF2B528BA3909000B91C2"
             BuildableName = "AppleFrameworkWithModal.app"
             BlueprintName = "AppleFrameworkWithModal"
             ReferencedContainer = "container:AppleFrameworkWithModal.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
