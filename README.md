@@ -5,6 +5,9 @@
 | :-: | 
 | ![](https://i.imgur.com/0YmtRoG.gif) | 
 
+## 🍎 Pipe line 설계도
+![](https://i.imgur.com/P611yg2.png)
+
 ## 🍎 기존 AppleFrameworkWithModal 프로젝트에서 바뀐점
 - 기존 프로젝트에서는 아이템이 클릭이 되거나, 화면을 구성할 때그에 맞는 함수들이 호출되는 형식이였다.
 - 이번 프로젝트는 Combine으로 데이터가 들어오면 이미 만들어진 파이프라인을 통해 처리하는 방식으로 구현했다. 
